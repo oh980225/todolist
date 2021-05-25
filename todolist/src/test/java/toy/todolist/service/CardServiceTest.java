@@ -36,9 +36,9 @@ class CardServiceTest {
     UserRepository userRepository;
 
     @Test
-    void 카드저장() {
-        LocalDate now = LocalDate.now();
+    void 카드저장_조회() {
         // given
+        LocalDate now = LocalDate.now();
         Card card = Card.builder()
                 .createdAt(CreatedAt.of(now))
                 .sendMailDate(SendMailDate.of(now))
@@ -55,13 +55,53 @@ class CardServiceTest {
         assertThat(findCard.getCreatedAt()).isEqualTo(CreatedAt.of(now));
         assertThat(findCard.getSendMailDate()).isEqualTo(SendMailDate.of(now));
         assertThat(findCard.getUser().getUserId()).isEqualTo("qwer1234");
+        assertThat(user.get().getCardList().get(0).getId()).isEqualTo(cardId);
     }
 
     @Test
     void 모든_카드_조회() {
+        // given
+        LocalDate now = LocalDate.now();
+        Optional<User> user = userRepository.findById(1L);
+
+        Card card1 = Card.builder()
+                .createdAt(CreatedAt.of(now))
+                .sendMailDate(SendMailDate.of(now))
+                .build();
+        Card card2 = Card.builder()
+                .createdAt(CreatedAt.of(now))
+                .sendMailDate(SendMailDate.of(now))
+                .build();
+
+        card1.setUser(user.orElseThrow(NullPointerException::new));
+        card2.setUser(user.orElseThrow(NullPointerException::new));
+
+        // when
+        Long card1Id = cardService.saveCard(card1);
+        Long card2Id = cardService.saveCard(card2);
+
+        // then
+        List<Card> cardList = cardService.findAllCard();
+        assertThat(cardList.size()).isEqualTo(2);
     }
 
     @Test
     void 카드삭제() {
+        // given
+        LocalDate now = LocalDate.now();
+        Card card = Card.builder()
+                .createdAt(CreatedAt.of(now))
+                .sendMailDate(SendMailDate.of(now))
+                .build();
+        Optional<User> user = userRepository.findById(1L);
+        card.setUser(user.orElseThrow(NullPointerException::new));
+
+        // when
+        Long cardId = cardService.saveCard(card);
+        cardService.deleteCard(cardId);
+
+        // then
+        Optional<Card> findCard = cardService.findOneCard(cardId);
+        assertThat(findCard.isEmpty()).isEqualTo(true);
     }
 }

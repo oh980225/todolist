@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import toy.todolist.auth.UserDetail;
-import toy.todolist.entity.User;
+import toy.todolist.entity.dto.UserDto;
 import toy.todolist.service.UserDetailService;
 
 @Slf4j
@@ -27,9 +27,8 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(User user) {
-        user.setRole("USER");
-        userDetailService.joinUser(user);
+    public String signUp(UserDto userDto) {
+        userDetailService.joinUser(userDto);
         return "redirect:/login";
     }
 

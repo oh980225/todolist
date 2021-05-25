@@ -26,7 +26,7 @@ public class CardService {
     }
 
     public List<Card> findAllCard() {
-        return null;
+        return cardRepository.findAll();
     }
 
     public Optional<Card> findOneCard(Long id) {

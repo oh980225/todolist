@@ -54,7 +54,7 @@ public class JpaCardRepository implements CardRepository {
     public void delete(Long id) {
         try {
             Card card = Optional.ofNullable(em.find(Card.class, id)).orElseThrow(NullPointerException::new);
-            em.remove(id);
+            em.remove(card);
             log.info("ID: " + id + "인 Card 삭제");
         } catch (NullPointerException e) {
             log.error("해당 객체가 존재하지 않습니다.");

@@ -1,16 +1,18 @@
 package toy.todolist.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import toy.todolist.entity.dto.CreatedAt;
 import toy.todolist.entity.dto.SendMailDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Card {
     @Id
     @GeneratedValue
@@ -21,6 +23,10 @@ public class Card {
     private SendMailDate sendMailDate;
     @ManyToOne
     private User user;
+    public void setUser(User user) {
+        this.user = user;
+        user.getCardList().add(this);
+    }
     @OneToMany(mappedBy = "card")
-    private List<ToDo> toDoList;
+    private final List<ToDo> toDoList = new ArrayList<>();
 }

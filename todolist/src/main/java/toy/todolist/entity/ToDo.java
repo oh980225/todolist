@@ -1,6 +1,6 @@
 package toy.todolist.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Data
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ToDo {
     @Id
     @GeneratedValue

@@ -20,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").hasRole("USER") // 자동으로 authority가 ROLE_USER인지 확인!
-                .antMatchers("/signUp").anonymous()
+                .antMatchers("/").hasRole("USER") // 자동으로 authority가 ROLE_USER인지 확인!
+                .antMatchers("/signUp").permitAll()
                 .and()
                 .formLogin()
                 .and()

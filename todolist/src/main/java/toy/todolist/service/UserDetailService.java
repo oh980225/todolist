@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.todolist.auth.UserDetail;
 import toy.todolist.entity.User;
+import toy.todolist.entity.dto.UserDto;
 import toy.todolist.repository.UserRepository;
 
 @Slf4j
@@ -25,10 +26,16 @@ public class UserDetailService implements UserDetailsService {
     }
 
     @Transactional
-    public void joinUser(User user){
+    public void joinUser(UserDto user){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        System.out.println("user = " + user);
+        User newUser = User.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .password(passwordEncoder.encode(user.getPassword()))
+                .role("USER")
+                .build();
+        userRepository.save(newUser);
     }
 
     @Override
