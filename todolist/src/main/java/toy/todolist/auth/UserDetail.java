@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class UserDetail implements UserDetails {
-    private String  userId;
+    private String userId;
     private String email;
     private String password;
     private String auth;

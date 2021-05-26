@@ -13,6 +13,8 @@ import toy.todolist.entity.User;
 import toy.todolist.entity.dto.UserDto;
 import toy.todolist.repository.UserRepository;
 
+import java.util.Optional;
+
 @Slf4j
 @Transactional
 @Service
@@ -36,6 +38,12 @@ public class UserDetailService implements UserDetailsService {
                 .role("USER")
                 .build();
         userRepository.save(newUser);
+    }
+
+    public User getUserByUserId(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        user.orElseThrow(IllegalArgumentException::new);
+        return user.get();
     }
 
     @Override

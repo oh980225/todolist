@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>✔ todolist</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<h1 class="welcome" th:text="'어서오세요! ' + ${userName} + '님'"></h1>
+<form method="post" action="/card">
+    <p class="card">
+        Date : <input id="cardDate" type="date" name="date">
+    <button>카드 생성</button>
+    </p>
+</form>
+</body>
+<script>
+  document.getElementById('cardDate').value= new Date().toISOString().substring(0, 10);
+
+</script>
+</html>

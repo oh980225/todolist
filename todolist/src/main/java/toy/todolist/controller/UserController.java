@@ -32,7 +32,7 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/")
+    @GetMapping("/user")
     public String userAccess(Model model, Authentication authentication) {
         UserDetail userDetail = (UserDetail)authentication.getPrincipal();
         model.addAttribute("info", userDetail.getUsername());
